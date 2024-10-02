@@ -98,3 +98,37 @@ select continent.Name,
 from continent
 inner join country on continent.Name = country.Continent
 group by continent.Name;
+
+
+-- Parte 2
+-- Si en la consulta 6 se quisiera devolver, además de las columnas ya solicitadas,
+-- el nombre de la ciudad más poblada. ¿Podría lograrse con agrupaciones? ¿y con una subquery escalar?
+
+-- Rta: si
+-- con agregacion + subquery
+SELECT country.Name AS CountryName, city.Name AS CityName, city.Population FROM country
+INNER JOIN city ON city.CountryCode = country.Code
+INNER JOIN (
+	SELECT CountryCode, max(Population) AS MaxPopulation
+	FROMS city
+	GROUP BY CountryCode
+) AS max_city ON city.CountryCode = max_city.CountryCode AND city.Population = max_city.MaxPopulation;
+
+
+-- con consulta escalar
+SELECT country.Name,
+	    (
+		SELECT city.Name
+		FROM city
+		WHERE city.CountryCode = country.Code
+		ORDER BY city.Population DESC 
+		LIMIT 1
+		) AS MostPopulousCity,
+		(
+		SELECT city.Population
+		FROM city
+		WHERE city.CountryCode = country.Code
+		ORDER BY city.Population DESC 
+		LIMIT 1
+		)
+FROM country;
