@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOTA: este shell script no esta bien formulado, correrlo probablemente no funcione, solo es para tener una referencia de comandos a usar
 
 # Pullear la imagen mas reciente de mongo
 docker pull mongo
