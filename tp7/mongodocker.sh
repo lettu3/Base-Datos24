@@ -20,3 +20,9 @@ docker exec -it $(NAME) $(COMMAND)
 
 # Para poder conectarse desde la extension de VSCode mongodb://127.0.0.1:27017/$(NAME)
 
+
+#para restaurar una base de datos a partir de bson comprimidos
+docker exec -it <nombre_del_contenedor> mongorestore --drop --gzip --db <db_name> <ruta_dentro_del_contenedor>
+
+#para importar una base de datos a partir de un json
+docker exec -it <nombre_del_contenedor> mongoimport --db <db_name> --file /<ruta_dentro_del_contenedor
